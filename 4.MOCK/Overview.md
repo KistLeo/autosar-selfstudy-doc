@@ -6,15 +6,15 @@
 | **ECU**                  | **SWC**                     | **Runnable**               | **Description** |
 |--------------------------|---------------------------|----------------------------|-----------------|
 | **Powertrain ECU (PCM)** | **Sensor Processing SWC** | `ReadSpeedAndSteering()`   | Reads vehicle speed and steering angle from ADC. |
-| **Powertrain ECU (PCM)** | **Sensor Processing SWC** | `SendSensorData()`         | Sends speed and steering data to Headlight Controller SWC via Sender-Receiver (S/R) port. |
+| **Powertrain ECU (PCM)** |                           | `SendSensorData()`         | Sends speed and steering data to Headlight Controller SWC via Sender-Receiver (S/R) port. |
 | **Body Control ECU (BCM)** | **Headlight Controller SWC (Left & Right)** | `ReceiveSensorData()`      | Receives speed & steering angle data from PCM ECU. |
-| **Body Control ECU (BCM)** | **Headlight Controller SWC (Left & Right)** | `ReadAmbientLight()`       | Reads ambient light sensor via ADC. |
-| **Body Control ECU (BCM)** | **Headlight Controller SWC (Left & Right)** | `ReadCameraData()`        | Reads object detection data from Camera ADAS. |
-| **Body Control ECU (BCM)** | **Headlight Controller SWC (Left & Right)** | `ComputeHeadlightLogic()`  | Determines headlight state based on speed, steering, ambient light, rain, and traffic detection conditions. |
-| **Body Control ECU (BCM)** | **Headlight Controller SWC (Left & Right)** | `SendHeadlightCommand()` | Sends computed headlight control command to Actuator SWC. |
+| **Body Control ECU (BCM)** |                                             | `ReadAmbientLight()`       | Reads ambient light sensor via ADC. |
+| **Body Control ECU (BCM)** |                                             | `ReadCameraData()`        | Reads object detection data from Camera ADAS. |
+| **Body Control ECU (BCM)** |                                             | `ComputeHeadlightLogic()`  | Determines headlight state based on speed, steering, ambient light, rain, and traffic detection conditions. |
+| **Body Control ECU (BCM)** |                                             | `SendHeadlightCommand()` | Sends computed headlight control command to Actuator SWC. |
 | **Body Control ECU (BCM)** | **Actuator SWC (Left & Right)** | `ReceiveHeadlightCommand()` | Receives headlight control command from Headlight Controller SWC. |
-| **Body Control ECU (BCM)** | **Actuator SWC (Left & Right)** | `ControlHeadlights()` | Switches ON/OFF headlights and adjusts beam angle using PWM & DIO. |
-| **Body Control ECU (BCM)** | **Actuator SWC (Left & Right)** | `SendHeadlightState()` | Sends back the current headlight state to the Headlight Controller SWC. |
+| **Body Control ECU (BCM)** |                                 | `ControlHeadlights()` | Switches ON/OFF headlights and adjusts beam angle using PWM & DIO. |
+| **Body Control ECU (BCM)** |                                 | `SendHeadlightState()` | Sends back the current headlight state to the Headlight Controller SWC. |
 
 ---
 
