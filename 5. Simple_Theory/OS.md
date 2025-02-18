@@ -72,3 +72,39 @@ The AUTOSAR OS is a real-time operating system (RTOS) designed for automotive ap
 ✅ Resource management prevents conflicts.  
 ✅ ARXML is used to configure the OS instead of writing low-level OS code.  
 
+
+## **3. Port Design for Communication**  
+
+### **Sender-Receiver (S/R) Ports**  
+| **Sending SWC**            | **Receiving SWC**       | **Port Name** | **Data Type** |
+|----------------------------|------------------------|--------------|--------------|
+| Sensor Processing SWC (PCM) | Headlight Controller SWC (BCM) | `SpeedAndSteeringData` | Struct `{float speed, float steering_angle}` |
+| Camera ADAS (MCAL) | Headlight Controller SWC (BCM) | `TrafficDetection` | Struct `{bool vehicleDetected, float distance}` |
+| Headlight Controller SWC (BCM) | Actuator SWC (BCM) | `HeadlightCommand_Left` | Enum `{LOW_BEAM, HIGH_BEAM, OFF, ADAPTIVE}` |
+| Headlight Controller SWC (BCM) | Actuator SWC (BCM) | `HeadlightCommand_Right` | Enum `{LOW_BEAM, HIGH_BEAM, OFF, ADAPTIVE}` |
+
+### **Client-Server (C/S) Ports (for Direct Requests)**  
+| **Client SWC** | **Server SWC** | **Port Name** | **Service Provided** |
+|--------------|--------------|-------------|------------------|
+| Headlight Controller SWC (BCM) | MCAL ADC Driver (Ambient Light Sensor) | `GetAmbientLight()` | Fetches the latest ambient light data. |
+| Actuator SWC (BCM) | Headlight Controller SWC (BCM) | `GetHeadlightState()` | Gets current headlight logic result. |
+| Actuator SWC (BCM) | MCAL DIO Driver | `SetHeadlightState()` | Controls ON/OFF state of headlights. |
+| Actuator SWC (BCM) | MCAL PWM Driver | `SetBeamAngle()` | Adjusts beam angle of headlights. |
+
+---
+
+## **4. Runnable Allocation to Ports**  
+
+| **Runnable**              | **Uses Port(s)** |
+|---------------------------|-----------------|
+| `ReadSpeedAndSteering()`  | Reads from **ADC** |
+| `SendSensorData()`        | Writes to **S/R Port: SpeedAndSteeringData** |
+| `ReceiveSensorData()`     | Reads from **S/R Port: SpeedAndSteeringData** |
+| `ReadAmbientLight()`      | Reads from **C/S Port: GetAmbientLight()** |
+| `ReadCameraData()`        | Reads from **S/R Port: TrafficDetection** |
+| `ComputeHeadlightLogic()` | Reads from **S/R Ports: SpeedAndSteeringData, TrafficDetection**, **C/S Port: GetAmbientLight()** |
+| `SendHeadlightCommand()`  | Writes to **S/R Ports: HeadlightCommand_Left, HeadlightCommand_Right** |
+| `ReceiveHeadlightCommand()` | Reads from **S/R Ports: HeadlightCommand_Left, HeadlightCommand_Right** |
+| `ControlHeadlights()`     | Reads from **S/R Port: HeadlightCommand**, **Uses C/S Ports: SetHeadlightState(), SetBeamAngle()** |
+| `SendHeadlightState()`    | Writes to **C/S Port: GetHeadlightState()** |
+
