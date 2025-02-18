@@ -10,7 +10,7 @@
 | **Body Control ECU (BCM)** | **Headlight Controller SWC (Left & Right)** | `ReceiveSensorData()`      | Receives speed & steering angle data from PCM ECU. |
 | **Body Control ECU (BCM)** |                                             | `ReadAmbientLight()`       | Reads ambient light sensor via ADC. |
 | **Body Control ECU (BCM)** |                                             | `ReadCameraData()`        | Reads object detection data from Camera ADAS. |
-| **Body Control ECU (BCM)** |                                             | `ComputeHeadlightLogic()`  | Determines headlight state based on speed, steering, ambient light, rain, and traffic detection conditions. |
+| **Body Control ECU (BCM)** |                                             | `ComputeHeadlightLogic()`  | Determines headlight state based on speed, steering, ambient light and traffic detection conditions. |
 | **Body Control ECU (BCM)** |                                             | `SendHeadlightCommand()` | Sends computed headlight control command to Actuator SWC. |
 | **Body Control ECU (BCM)** | **Actuator SWC (Left & Right)** | `ReceiveHeadlightCommand()` | Receives headlight control command from Headlight Controller SWC. |
 | **Body Control ECU (BCM)** |                                 | `ControlHeadlights()` | Switches ON/OFF headlights and adjusts beam angle using PWM & DIO. |
@@ -95,7 +95,7 @@ The following table maps the **runnables** in the system to their respective **E
 | `ReceiveSensorData()`     | Reads from **S/R Port: SpeedAndSteeringData** |
 | `ReadAmbientLight()`      | Reads from **C/S Port: GetAmbientLight()** |
 | `ReadCameraData()`        | Reads from **S/R Port: TrafficDetection** |
-| `ComputeHeadlightLogic()` | Reads from **S/R Ports: SpeedAndSteeringData, RainData, TrafficDetection**, **C/S Port: GetAmbientLight()** |
+| `ComputeHeadlightLogic()` | Reads from **S/R Ports: SpeedAndSteeringData, TrafficDetection**, **C/S Port: GetAmbientLight()** |
 | `SendHeadlightCommand()`  | Writes to **S/R Ports: HeadlightCommand_Left, HeadlightCommand_Right** |
 | `ReceiveHeadlightCommand()` | Reads from **S/R Ports: HeadlightCommand_Left, HeadlightCommand_Right** |
 | `ControlHeadlights()`     | Reads from **S/R Port: HeadlightCommand**, **Uses C/S Ports: SetHeadlightState(), SetBeamAngle()** |
