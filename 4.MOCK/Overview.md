@@ -107,7 +107,7 @@ The following table maps the **runnables** in the system to their respective **E
 ```
 [Powertrain ECU]
   - (Every 100ms) ReadSpeedAndSteering() -> Fetch ADC data
-  - SendSensorData() -> Sends speed & steering data via RTE
+  - SendSensorData() -> Sends speed & steering data via CAN
 
 [Body Control ECU]
   - ReceiveSensorData() -> Gets speed & steering angle
