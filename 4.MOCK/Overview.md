@@ -20,18 +20,49 @@
 
 ## **2. Events Triggering the Runnables**  
 
-| **Runnable**             | **Event Type**       | **Trigger Condition** |
-|--------------------------|---------------------|-----------------------|
-| `ReadSpeedAndSteering()`  | **Timing Event**    | Every **100ms**, fetches data from ADC. |
-| `SendSensorData()`        | **Data Received Event** | After `ReadSpeedAndSteering()` fetches data, it sends data via RTE. |
-| `ReceiveSensorData()`     | **Data Received Event** | Triggered when `SendSensorData()` sends new values. |
-| `ReadAmbientLight()`      | **Timing Event**    | Every **100ms**, reads ambient light sensor. |
-| `ReadCameraData()`        | **Data Received Event** | Triggered when new camera detection data is available. |
-| `ComputeHeadlightLogic()` | **Data Received Event** | Runs when **sensor data (speed, steering, ambient light, rain, traffic detection) updates**. |
-| `SendHeadlightCommand()`  | **Data Received Event** | Runs when `ComputeHeadlightLogic()` determines a headlight change is needed. |
-| `ReceiveHeadlightCommand()` | **Data Received Event** | Runs when a new headlight command is received. |
-| `ControlHeadlights()`     | **Data Received Event** | Runs when new headlight control commands are available from `ComputeHeadlightLogic()`. |
-| `SendHeadlightState()`    | **Timing Event**    | Every **500ms**, sends the latest headlight state to Headlight Controller SWC. |
+### **Event Table for Adaptive Headlight Control System**  
+The following table maps the **runnables** in the system to their respective **ECUs, event types, and trigger conditions**.
+
+---
+
+### **Event Table**
+| **Runnable**                | **ECU**                    | **Event Type**                         | **Trigger Condition** |
+|-----------------------------|---------------------------|----------------------------------------|-----------------------|
+| `ReadSpeedAndSteering()`    | **Sensor Process SWC**    | **Timing Event**                      | Every **100ms**, read speed & steering angle from sensors. |
+| `SendSensorData()`          | **Sensor Process SWC**    | **Data Send Complete Event**          | After `ReadSpeedAndSteering()` fetches data, send it to Headlight Controller SWC. |
+| `ReceiveSensorData()`       | **Headlight Controller SWC** | **Data Receive Event**              | Triggered when new speed & steering data is received from Sensor Process SWC. |
+| `ReadAmbientLight()`        | **Headlight Controller SWC** | **Timing Event** / **Internal Trigger Event** | Every **100ms** or when there is a significant change in ambient light. |
+| `ReadCameraData()`          | **Headlight Controller SWC** | **Data Receive Event**              | Triggered when Camera ADAS detects an object or vehicle. |
+| `ComputeHeadlightLogic()`   | **Headlight Controller SWC** | **Data Received Event** / **Mode Switch Event** | Runs when sensor data updates or when a mode switch occurs. |
+| `SendHeadlightCommand()`    | **Headlight Controller SWC** | **Data Write Complete Event**       | Activated when `ComputeHeadlightLogic()` determines a headlight change is needed. |
+| `ReceiveHeadlightCommand()` | **Actuator SWC**          | **Data Receive Event**               | Triggered when a new headlight command is received from the Headlight Controller SWC. |
+| `ControlHeadlights()`       | **Actuator SWC**          | **Data Received Event** / **Mode Switch Event** | Runs when a new control command is received or when switching modes (DRL, Low Beam, High Beam, Adaptive). |
+| `SendHeadlightState()`      | **Actuator SWC**          | **Timing Event**                     | Every **500ms**, sends the latest headlight status back to the Headlight Controller SWC. |
+| `FailSafeTrigger()`         | **Headlight Controller SWC** | **Mode Manager Error Event** / **Data Receive Error Event** | Activated when a sensor fails or data cannot be received from input sources. |
+| `ModeSwitchEvent()`         | **Headlight Controller SWC** | **Mode Switch Event**               | Triggered when switching between headlight modes (DRL ↔ Low Beam ↔ High Beam ↔ Adaptive). |
+| `ModeSwitchAck()`           | **Headlight Controller SWC** | **Mode Switch Ack Event**           | Triggered when the system successfully changes the headlight mode. |
+
+---
+
+### **Explanation of Event Types**
+- **Timing Event**: Used for tasks that execute at fixed intervals (e.g., reading sensor data every 100ms).
+- **Data Events**: Used for communication between SWCs, including sending and receiving sensor data or control commands.
+- **Mode Events**: Handle mode transitions, including switching headlight modes, detecting mode errors, and acknowledging mode changes.
+- **Fail-Safe Mechanism**: Triggered when there is a sensor failure or when the system cannot execute a control action.
+
+---
+
+### **Summary of Event Flow**
+1. **Sensor Process SWC** reads speed & steering sensor data (**Timing Event**).
+2. The data is sent to **Headlight Controller SWC** (**Data Send Complete Event**).
+3. **Headlight Controller SWC** receives the data (**Data Receive Event**) and updates inputs from **Ambient Light Sensor** and **Camera Sensor**.
+4. **ComputeHeadlightLogic()** processes the data and determines the headlight state (**Mode Switch Event** if needed).
+5. The computed headlight command is sent to **Actuator SWC** (**Data Write Complete Event**).
+6. **Actuator SWC** receives the command, adjusts headlights, and sends back the current state (**Data Receive Event** + **Timing Event**).
+7. If a sensor or communication failure occurs, **FailSafeTrigger()** is activated to ensure system safety (**Mode Manager Error Event**).
+
+---
+
 
 ---
 
@@ -81,7 +112,6 @@
 [Body Control ECU]
   - ReceiveSensorData() -> Gets speed & steering angle
   - ReadAmbientLight() -> Reads ambient light level (ADC)
-  - ReadRainSensor() -> Reads rain data
   - ReadCameraData() -> Detects vehicles
   - ComputeHeadlightLogic() -> Decides beam level
   - SendHeadlightCommand() -> Sends control signal to Actuator SWC
