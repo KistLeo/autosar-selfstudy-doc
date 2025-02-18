@@ -28,9 +28,9 @@ The following table maps the **runnables** in the system to their respective **E
 ### **Event Table**
 | **Runnable**                | **ECU**                    | **Event Type**                         | **Trigger Condition** |
 |-----------------------------|---------------------------|----------------------------------------|-----------------------|
-| `ReadSpeedAndSteering()`    | **Sensor Process SWC**    | **Timing Event**                      | Every **100ms**, read speed & steering angle from sensors. |
-| `SendSensorData()`          | **Sensor Process SWC**    | **Data Send Complete Event**          | After `ReadSpeedAndSteering()` fetches data, send it to Headlight Controller SWC. |
-| `ReceiveSensorData()`       | **Headlight Controller SWC** | **Data Receive Event**              | Triggered when new speed & steering data is received from Sensor Process SWC. |
+| `ReadSpeedAndSteering()`    | **VehicleStateSensor SWC**    | **Timing Event**                      | Every **100ms**, read speed & steering angle from sensors. |
+| `SendSensorData()`          | **VehicleStateSensor SWC**    | **Data Send Complete Event**          | After `ReadSpeedAndSteering()` fetches data, send it to Headlight Controller SWC. |
+| `ReceiveSensorData()`       | **Headlight Controller SWC** | **Data Receive Event**              | Triggered when new speed & steering data is received from VehicleStateSensor SWC. |
 | `ReadAmbientLight()`        | **Headlight Controller SWC** | **Timing Event** / **Internal Trigger Event** | Every **100ms** or when there is a significant change in ambient light. |
 | `ReadCameraData()`          | **Headlight Controller SWC** | **Data Receive Event**              | Triggered when Camera ADAS detects an object or vehicle. |
 | `ComputeHeadlightLogic()`   | **Headlight Controller SWC** | **Data Received Event** / **Mode Switch Event** | Runs when sensor data updates or when a mode switch occurs. |
@@ -53,7 +53,7 @@ The following table maps the **runnables** in the system to their respective **E
 ---
 
 ### **Summary of Event Flow**
-1. **Sensor Process SWC** reads speed & steering sensor data (**Timing Event**).
+1. **VehicleStateSensor SWC** reads speed & steering sensor data (**Timing Event**).
 2. The data is sent to **Headlight Controller SWC** (**Data Send Complete Event**).
 3. **Headlight Controller SWC** receives the data (**Data Receive Event**) and updates inputs from **Ambient Light Sensor** and **Camera Sensor**.
 4. **ComputeHeadlightLogic()** processes the data and determines the headlight state (**Mode Switch Event** if needed).
