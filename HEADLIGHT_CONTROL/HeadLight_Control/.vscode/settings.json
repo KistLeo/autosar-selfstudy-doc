@@ -1,0 +1,10 @@
+{
+    "files.associations": {
+        "os.h": "c",
+        "rte_vehiclestatesensor.h": "c",
+        "std_types.h": "c",
+        "adc.h": "c",
+        "iohwab_speedsensor.h": "c",
+        "rte_memmap.h": "c"
+    }
+}

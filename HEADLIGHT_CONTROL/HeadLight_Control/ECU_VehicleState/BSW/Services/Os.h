@@ -1,20 +1,14 @@
-#ifndef OS_H
-#define OS_H
+#ifndef OS_EVENT_H
+#define OS_EVENT_H
 
-#include <stdio.h>
-#include <pthread.h>
-#include <unistd.h>
+#include <stdint.h>  
 
-// Khởi tạo hệ điều hành (OS)
-void Os_Init(void);
+/* Define EventMaskType if not already defined */
+typedef uint32_t EventMaskType;  
 
-// Tạo và khởi động một luồng (thread)
-void Os_CreateTask(void* (*task_func)(void*), const char* task_name);
+/* Define event bitmasks */
+#define Ev_SensorUpdate    ((EventMaskType)0x01)  // Bit 0
+#define Ev_SensorDataSent  ((EventMaskType)0x02)  // Bit 1
 
-// Hàm delay để mô phỏng việc ngừng luồng trong một thời gian nhất định
-void Os_Delay(int milliseconds);
 
-// Hàm kết thúc hệ điều hành (OS) và chờ các luồng kết thúc
-void Os_Shutdown(void);
-
-#endif // OS_H
+#endif /* OS_EVENT_H */
