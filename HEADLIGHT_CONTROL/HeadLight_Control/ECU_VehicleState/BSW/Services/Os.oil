@@ -1,0 +1,46 @@
+CPU CORTEX-M4 {
+        OS S_OSEK {
+				STATUS = EXTENDED ;
+				STARTUPHOOK = FALSE;
+				ERRORHOOK = FALSE;
+				STACKOVERFLOWHOOK = FALSE;
+				SHUTDOWNHOOK = FALSE;
+				PRETASKHOOK = FALSE;
+				POSTTASKHOOK = FALSE;
+				USEGETSERVICEID = FALSE;
+				USEPARAMETERACCESS = FALSE;
+				USERESSCHEDULER = FALSE;
+				SYSTEMTICKMS = 1 ; 
+        };   
+        TASK AppTask_InitHW{
+                PRIORITY = 100;
+                SCHEDULE = FULL;
+                ACTIVATION = 1;
+                AUTOSTART = TRUE; 
+                STACKSIZE = 50;
+        };         
+        TASK AppTask_SensorProcessing{
+                PRIORITY = 50;
+                SCHEDULE = FULL;
+                ACTIVATION = 1;
+                AUTOSTART = FALSE;
+                STACKSIZE = 50;
+        };         
+        
+        ALARM Alrm_SensorUpdate {
+            COUNTER = MainCounter;
+            ACTION = ACTIVATETASK  {
+               TASK = AppTask_SensorProcessing;
+            };
+            AUTOSTART = TRUE {
+               ALARMTIME = 1; 
+               CYCLETIME = 100; 
+            };
+        }    
+      
+        COUNTER MainCounter {
+            MINCYCLE = 1;
+            MAXALLOWEDVALUE = 0xFFFFFFFF;
+            TICKSPERBASE = 1;
+	};
+};
