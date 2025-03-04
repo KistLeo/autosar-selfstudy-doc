@@ -25,20 +25,19 @@ CPU CORTEX-M4 {
         PRIORITY = 50;
         SCHEDULE = FULL;
         ACTIVATION = 1;
-        AUTOSTART = FALSE;
+        AUTOSTART = TRUE;
         STACKSIZE = 50;
         EVENT = Ev_SensorUpdate;
-        EVENT = Ev_SensorDataSent;
     };
 
     ALARM Alrm_SensorUpdate {
         COUNTER = MainCounter;
-        ACTION = SETEVENT {
+        ACTION = SETEVENT{
             TASK = AppTask_SensorProcessing;
-            EVENT = Ev_SensorUpdate;
+	    EVENT = Ev_SensorUpdate;
         };
         AUTOSTART = TRUE {
-            ALARMTIME = 1;
+            ALARMTIME = 200;
             CYCLETIME = 100;
         };
     };
@@ -49,11 +48,7 @@ CPU CORTEX-M4 {
         TICKSPERBASE = 1;
     };
 
-    EVENT Ev_SensorUpdate {
-        MASK = AUTO;
-    };
-
-    EVENT Ev_SensorDataSent {
+    EVENT Ev_SensorUpdate;{
         MASK = AUTO;
     };
 };

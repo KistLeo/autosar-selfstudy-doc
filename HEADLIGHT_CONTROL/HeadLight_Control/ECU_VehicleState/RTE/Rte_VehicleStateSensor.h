@@ -18,6 +18,7 @@
 #include "Common/Std_Types.h"
 #include "Common/Compiler.h"
 #include "Common/Compiler_Cfg.h"
+#include "ECU_VehicleState/RTE/RTE_MemMap.h"
 
 
 #ifdef __cplusplus

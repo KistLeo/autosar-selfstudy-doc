@@ -2,7 +2,7 @@
 #define ADC_H
 
 #include "Std_Types.h"  // Include standard types
-
+#include <stdint.h>
 
 typedef unsigned int Adc_GroupType;
 typedef unsigned int Adc_ValueGroupType;

@@ -1,26 +1,53 @@
-#include "ECU_VehicleState/BSW/Services/Os.h"
-#include "ECU_VehicleState/RTE/Rte_VehicleStateSensor.h"  
+// /**
+//  * @file OsekIntro_Example2.c
+//  * @author Sarea Alhariri (Sarea.h95@outlook.com)
+//  * @brief  Extended task and periodic event setting. 
+//  * @version 0.1
+//  * @date 2020-08-19
+//  *
+//  * @copyright Sarea Alhariri - All rights reserved
+//  *
+//  */
 
-DeclareTask(AppTask_SensorProcessing);
+// #include "Rte_VehicleStateSensor.h"
+// #include <stdint.h>
+// #include <stdbool.h>
 
 
-TASK(AppTask_SensorProcessing) {
-    EventMaskType events;
-    
-    while (1) {
-        WaitEvent(Ev_SensorUpdate | Ev_SensorDataSent);
-        GetEvent(AppTask_SensorProcessing, &events);
-        ClearEvent(events);
-
-        
-        if (events & Ev_SensorUpdate) {
-            Rte_Ev_ReadSpeedAndSteering();  
-            
-            SetEvent(AppTask_SensorProcessing, Ev_SensorDataSent);
-        }
-
-        if (events & Ev_SensorDataSent) {
-            Rte_Ev_SendSensorData();  
-        }
-    }
-}
+//  static uint8_t AppTask_PeriodicExtended_Toggle = 0U ; 
+ 
+//  bool hwinitFlag = false;
+//  DeclareTask(AppTask_SensorProcessing);
+//  DeclareTask(AppTask_InitHW);
+ 
+ 
+//  void SystemInit(void)
+//  {
+//  }
+//  int main(void)
+//  {
+//    StartOS();
+//    while(1); /* Should not be executed */
+//    return 0;
+//  }
+ 
+//  TASK(AppTask_SensorProcessing)
+//  { 
+//              while(true){
+//                      WaitEvent(Ev_SensorUpdate);
+//                      ClearEvent(Ev_SensorUpdate);
+//                      AppTask_PeriodicExtended_Toggle ^= 1; 
+//                    Rte_Ev_ReadSpeedAndSteering();  
+//                     Rte_Ev_SendSensorData();  
+//              }
+//  }
+ 
+//  TASK(AppTask_InitHW)
+//  {
+//          if (hwinitFlag == false){
+//              hwinitFlag = true;
+//          }
+     
+//      TerminateTask(); 
+//  }
+ 

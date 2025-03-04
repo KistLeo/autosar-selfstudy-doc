@@ -1,0 +1,79 @@
+CPU CORTEX-M4 {
+    OS S_OSEK {
+        STATUS = EXTENDED;
+        STARTUPHOOK = FALSE;
+        ERRORHOOK = FALSE;
+        STACKOVERFLOWHOOK = FALSE;
+        SHUTDOWNHOOK = FALSE;
+        PRETASKHOOK = FALSE;
+        POSTTASKHOOK = FALSE;
+        USEGETSERVICEID = FALSE;
+        USEPARAMETERACCESS = FALSE;
+        USERESSCHEDULER = FALSE;
+        SYSTEMTICKMS = 1;
+    };
+
+    TASK AppTask_InitHW {
+        PRIORITY = 100;
+        SCHEDULE = FULL;
+        ACTIVATION = 1;
+        AUTOSTART = TRUE;
+        STACKSIZE = 50;
+    };
+
+    TASK AppTask_HeadlightControl{
+        PRIORITY = 70;
+        SCHEDULE = FULL;
+        ACTIVATION = 1;
+        AUTOSTART = TRUE;
+        STACKSIZE = 50;
+        EVENT = Ev_HeadlightCommandSent;
+    };
+    TASK AppTask_HeadlightFeedback{
+        PRIORITY = 10;
+        SCHEDULE = FULL;
+        ACTIVATION = 1;
+        AUTOSTART = TRUE;
+        STACKSIZE = 50;
+        EVENT = Ev_HeadlightStateUpdate;
+    };
+    TASK AppTask_HeadlightLogic {
+        PRIORITY = 60;
+        SCHEDULE = FULL;
+        ACTIVATION = 1;
+        AUTOSTART = TRUE;
+        STACKSIZE = 50;
+        EVENT = Ev_HeadlightInputUpdate;   
+    };
+       
+
+    TASK AppTask_HeadlightInput{
+        PRIORITY = 50;
+        SCHEDULE = FULL;
+        ACTIVATION = 1;
+        AUTOSTART = TRUE;
+        STACKSIZE = 50;
+        EVENT = Ev_HeadlightInputCollect;
+    };
+
+    ALARM HeadlightInputUpdate {
+        COUNTER = MainCounter;
+        ACTION = SETEVENT {
+            TASK = AppTask_HeadlightInput;
+            EVENT = Ev_HeadlightInputCollect;
+        };
+        AUTOSTART = TRUE {
+            ALARMTIME = 200;
+            CYCLETIME = 100;
+        };
+    };
+    COUNTER MainCounter {
+        MINCYCLE = 1;
+        MAXALLOWEDVALUE = 0xFFFFFFFF;
+        TICKSPERBASE = 1;
+    };
+    EVENT Ev_HeadlightStateUpdate { MASK = AUTO; }
+    EVENT Ev_HeadlightCommandSent { MASK = AUTO; }
+    EVENT Ev_HeadlightInputUpdate { MASK = AUTO; }
+    EVENT Ev_HeadlightInputCollect { MASK = AUTO;}
+}
