@@ -1,9 +1,9 @@
-#include "ECU_VehicleState/RTE/Rte_VehicleStateSensor.h"
+#include "Rte_VehicleStateSensor.h"
 #include "Std_Types.h"
-
+#include "stdint.h"
+#include <stdlib.h>
 typedef struct {
-    float speed;         
-    float steeringAngle; 
+    uint16 speed;         
+    sint16 steeringAngle; 
 } VehicleStateData;
-
 static VehicleStateData vehicleState;  

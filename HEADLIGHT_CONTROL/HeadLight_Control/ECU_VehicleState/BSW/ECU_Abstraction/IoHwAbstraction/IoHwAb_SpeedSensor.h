@@ -2,15 +2,14 @@
 #define IOHWAB_SPEEDSENSOR_H
 
 #include "Std_Types.h"
+#include <math.h>
+
 
 /* Maximum Speed in km/h based on ADC full scale */
-#define MAX_SPEED_KMH 250.0f  
+#define MAX_SPEED_KMH 250U
 
-typedef struct {
-    float speed;
-} SpeedSensor_DataType;
 
 Std_ReturnType IoHwAb_SpeedSensor_Init();
-Std_ReturnType IoHwAb_SpeedSensor_Read(SpeedSensor_DataType *SensorData);
+Std_ReturnType IoHwAb_SpeedSensor_Read();
 
 #endif /* IOHWAB_SPEEDSENSOR_H */

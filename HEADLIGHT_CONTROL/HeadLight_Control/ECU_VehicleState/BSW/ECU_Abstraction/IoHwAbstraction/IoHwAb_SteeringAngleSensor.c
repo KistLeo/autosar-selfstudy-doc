@@ -1,6 +1,9 @@
 #include "IoHwAb_SteeringAngleSensor.h"
 #include <stdio.h>
 #include "Adc.h"
+#include <stdlib.h>  
+#include <stdint.h>  
+#include "Rte_VehicleStateSensor.h"
 
 Std_ReturnType IoHwAb_SteeringSensor_Init(void)
 {
@@ -8,11 +11,26 @@ Std_ReturnType IoHwAb_SteeringSensor_Init(void)
     return E_OK;
 }
 
-Std_ReturnType IoHwAb_SteeringSensor_Read(SteeringSensor_DataType *SensorData)
+//Std_ReturnType IoHwAb_SteeringSensor_Read(SteeringSensor_DataType *SensorData)
+//{
+//    if (SensorData == NULL) {
+//        return E_NOT_OK;
+//    }
+
+//    Adc_ValueGroupType adcValue = 0;
+//    
+//    if (Adc_ReadGroup(STEERING_SENSOR_GROUP, &adcValue) != E_OK) {
+//        return E_NOT_OK;
+//    }
+
+//    /* Convert ADC value to degrees */
+//    SensorData->angle = (adcValue / 1023U) * MAX_STEERING_ANGLE;
+
+//    return E_OK;
+//}
+Std_ReturnType IoHwAb_SteeringSensor_Read()
 {
-    if (SensorData == NULL) {
-        return E_NOT_OK;
-    }
+    sint16 angle = 0;
 
     Adc_ValueGroupType adcValue = 0;
     
@@ -21,7 +39,12 @@ Std_ReturnType IoHwAb_SteeringSensor_Read(SteeringSensor_DataType *SensorData)
     }
 
     /* Convert ADC value to degrees */
-    SensorData->angle = ((float)adcValue / 1023.0f) * MAX_STEERING_ANGLE;
-
+    //angle = (adcValue / 1023) * MAX_STEERING_ANGLE;
+		
+		angle = (rand() % (2 * MAX_STEERING_ANGLE + 1)) - MAX_STEERING_ANGLE;
+    Std_ReturnType status = Rte_Write_PP_SteeringSensor_Angle(&angle);
+    if (status != E_OK) {
+        return E_NOT_OK;
+    }
     return E_OK;
 }

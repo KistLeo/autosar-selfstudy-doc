@@ -13,12 +13,12 @@
 /*----------------------------------------------------------------------------*/
 /* include headers                                                            */
 /*----------------------------------------------------------------------------*/
-#include "ECU_VehicleState/BSW/ECU_Abstraction/IoHwAbstraction/IoHwAb_SpeedSensor.h"
+#include "IoHwAb_SpeedSensor.h"
 #include "IoHwAb_SteeringAngleSensor.h"
-#include "Common/Std_Types.h"
-#include "Common/Compiler.h"
-#include "Common/Compiler_Cfg.h"
-#include "ECU_VehicleState/RTE/RTE_MemMap.h"
+#include "Std_Types.h"
+#include "Compiler.h"
+#include "Compiler_Cfg.h"
+#include "RTE_MemMap.h"
 
 
 #ifdef __cplusplus
@@ -32,18 +32,29 @@ extern "C" {
 // void Rte_Ev_ReadSpeedAndSteering();  
 // void Rte_Ev_SendSensorData();  
 
-extern FUNC(void, RTE_CODE_EcucPartition_0) Rte_Ev_ReadSpeedAndSteering(void);
+typedef struct {
+    sint16 angle;
+    uint16 speed;
+} DataSensor;
+static DataSensor dataSensor;
+
+extern FUNC(void, RTE_CODE_EcucPartition_0) Rte_Ev_ReadSpeedAndSteering(int *speed_check, sint16 *angle_check);
 #define Rte_Ev_ReadSpeedAndSteering Rte_Ev_ReadSpeedAndSteering
 
 extern FUNC(void, RTE_CODE_EcucPartition_0) Rte_Ev_SendSensorData(void);
 #define Rte_Ev_SendSensorData Rte_Ev_SendSensorData
 
-extern FUNC(Std_ReturnType, RTE_CODE_EcucPartition_0) Rte_Read_RP_SpeedSensor_Speed( P2VAR(float, AUTOMATIC, RTE_APPL_DATA) Speed );
+extern FUNC(Std_ReturnType, RTE_CODE_EcucPartition_0) Rte_Read_RP_SpeedSensor_Speed( P2VAR(uint16, AUTOMATIC, RTE_APPL_DATA) Speed );
 #define Rte_Read_RP_SpeedSensor_Speed Rte_Read_RP_SpeedSensor_Speed
 
-extern FUNC(Std_ReturnType, RTE_CODE_EcucPartition_0) Rte_Read_RP_SteeringSensor_Angle( P2VAR(float, AUTOMATIC, RTE_APPL_DATA) Angle );
+extern FUNC(Std_ReturnType, RTE_CODE_EcucPartition_0) Rte_Read_RP_SteeringSensor_Angle( P2VAR(sint16, AUTOMATIC, RTE_APPL_DATA) Angle );
 #define Rte_Read_RP_SteeringSensor_Angle Rte_Read_RP_SteeringSensor_Angle
 
+extern FUNC(Std_ReturnType, RTE_CODE_EcucPartition_0) Rte_Write_PP_SpeedSensor_Speed(P2VAR(uint16, AUTOMATIC, RTE_APPL_DATA) Speed);
+#define Rte_Write_PP_SpeedSensor_Speed Rte_Write_PP_SpeedSensor_Speed
+
+extern FUNC(Std_ReturnType, RTE_CODE_EcucPartition_0) Rte_Write_PP_SteeringSensor_Angle(P2VAR(sint16, AUTOMATIC, RTE_APPL_DATA) Angle);
+#define Rte_Write_PP_SteeringSensor_Angle Rte_Write_PP_SteeringSensor_Angle
 
 
 #ifdef __cplusplus

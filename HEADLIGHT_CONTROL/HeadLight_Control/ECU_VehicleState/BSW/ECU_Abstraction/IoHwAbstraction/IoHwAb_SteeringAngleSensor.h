@@ -2,15 +2,14 @@
 #define IOHWAB_STEERINGSENSOR_H
 
 #include "Std_Types.h"
+#include <math.h>
+
 
 /* Maximum steering angle in degrees */
-#define MAX_STEERING_ANGLE 45.0f  
+#define MAX_STEERING_ANGLE 180U
 
-typedef struct {
-    float angle; // Steering angle in degrees
-} SteeringSensor_DataType;
 
 Std_ReturnType IoHwAb_SteeringSensor_Init(void);
-Std_ReturnType IoHwAb_SteeringSensor_Read(SteeringSensor_DataType *SensorData);
+Std_ReturnType IoHwAb_SteeringSensor_Read();
 
 #endif /* IOHWAB_STEERINGSENSOR_H */
