@@ -19,6 +19,7 @@
 #include "Compiler.h"
 #include "Compiler_Cfg.h"
 #include "RTE_MemMap.h"
+#include "ECU_VehicleState/BSW/Services/Com.h"
 
 
 #ifdef __cplusplus
@@ -55,6 +56,9 @@ extern FUNC(Std_ReturnType, RTE_CODE_EcucPartition_0) Rte_Write_PP_SpeedSensor_S
 
 extern FUNC(Std_ReturnType, RTE_CODE_EcucPartition_0) Rte_Write_PP_SteeringSensor_Angle(P2VAR(sint16, AUTOMATIC, RTE_APPL_DATA) Angle);
 #define Rte_Write_PP_SteeringSensor_Angle Rte_Write_PP_SteeringSensor_Angle
+
+extern FUNC(Std_ReturnType, RTE_CODE) Rte_Write_PP_VehicleStateFrame( P2CONST(uint8, AUTOMATIC, RTE_APPL_DATA) FrameData);
+#define Rte_Write_PP_VehicleStateFrame Rte_Write_PP_VehicleStateFrame
 
 
 #ifdef __cplusplus

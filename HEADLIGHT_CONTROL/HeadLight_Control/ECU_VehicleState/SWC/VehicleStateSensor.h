@@ -7,3 +7,4 @@ typedef struct {
     sint16 steeringAngle; 
 } VehicleStateData;
 static VehicleStateData vehicleState;  
+extern FUNC(void, RTE_CODE) SendSensorData(void);

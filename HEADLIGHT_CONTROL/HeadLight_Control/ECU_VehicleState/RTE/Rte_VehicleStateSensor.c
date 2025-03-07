@@ -236,3 +236,22 @@ FUNC(Std_ReturnType, RTE_CODE_EcucPartition_0) Rte_Write_PP_SteeringSensor_Angle
     }
 }
 #define RTE_STOP_SEC_CODE_EcucPartition_0
+
+
+
+
+#define RTE_START_SEC_CODE_EcucPartition_0
+#include "ECU_VehicleState/RTE/RTE_MemMap.h"
+
+FUNC(Std_ReturnType, RTE_CODE) Rte_Write_PP_VehicleStateFrame(
+    P2CONST(uint8, AUTOMATIC, RTE_APPL_DATA) FrameData)
+{
+    PduInfoType PduInfo;
+    PduInfo.SduDataPtr = (uint8*)FrameData;  
+    PduInfo.SduLength = VEHICLE_STATE_FRAME_LENGTH;  
+
+    return Com_SendSignal(PDU_ID_VEHICLE_STATE_FRAME, &PduInfo);
+    
+}
+
+#define RTE_STOP_SEC_CODE_EcucPartition_0

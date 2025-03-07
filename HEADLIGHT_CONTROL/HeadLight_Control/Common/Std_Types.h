@@ -21,6 +21,11 @@
  
  /* AUTOSAR Types */
  typedef uint8 Std_ReturnType;
+ typedef uint8 Can_HwHandleType;
+ typedef uint32 Can_IdType;
+
+/* Định nghĩa PDU ID Type */
+typedef uint16 PduIdType;
  
  /* AUTOSAR Defines */
  #define TRUE      			1U

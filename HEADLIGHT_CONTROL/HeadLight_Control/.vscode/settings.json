@@ -5,6 +5,10 @@
         "std_types.h": "c",
         "adc.h": "c",
         "iohwab_speedsensor.h": "c",
-        "rte_memmap.h": "c"
+        "rte_memmap.h": "c",
+        "vehiclestatesensor.h": "c",
+        "com.h": "c",
+        "pdu_router.h": "c",
+        "headlight_controller.h": "c"
     }
 }
