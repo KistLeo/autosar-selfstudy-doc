@@ -77,19 +77,25 @@ extern FUNC(Std_ReturnType, RTE_CODE_EcucPartition_0) Rte_Write_PP_SteeringSenso
 
 //service for computing headlight logic
 extern FUNC(Std_ReturnType, RTE_CODE_EcucPartition_0) RTE_Write_PP_HeadlightController_HeadlightState(VAR(HeadlightState, AUTOMATIC) State);
-#define RTE_Write_PP_HeadlightController_HeadlightState RTE_Write_PP_HeadlightController_HeadlightState
+#define RTE_Write_PP_HeadlightController_HeadlightState RTE_Write_PP_HeadlightController_HeadlightState //compute -> write state
 
 extern FUNC(Std_ReturnType, RTE_CODE_EcucPartition_0) RTE_Read_RP_HeadlightController_HeadlightState(P2VAR(HeadlightState, AUTOMATIC, RTE_APPL_DATA) State);
-#define RTE_Read_RP_HeadlightController_HeadlightState RTE_Read_RP_HeadlightController_HeadlightState
+#define RTE_Read_RP_HeadlightController_HeadlightState RTE_Read_RP_HeadlightController_HeadlightState //actuator -> read state
+
 
 extern FUNC(Std_ReturnType, RTE_CODE_EcucPartition_0) RTE_Write_PP_HeadlightActuator_Command(VAR(HeadlightState, AUTOMATIC) Command);
-#define RTE_Write_PP_HeadlightActuator_Command RTE_Write_PP_HeadlightActuator_Command
+#define RTE_Write_PP_HeadlightActuator_Command RTE_Write_PP_HeadlightActuator_Command //write comand to rte
 
 extern FUNC(Std_ReturnType, RTE_CODE_EcucPartition_0) RTE_Write_PP_HeadlightActuator_State(VAR(HeadlightState, AUTOMATIC) State);
-#define RTE_Write_PP_HeadlightActuator_State RTE_Write_PP_HeadlightActuator_State
+#define RTE_Write_PP_HeadlightActuator_State RTE_Write_PP_HeadlightActuator_State  //send back the state 
 
-extern FUNC(Std_ReturnType, RTE_CODE_EcucPartition_0) RTE_Write_PP_HeadlightActuator_Command(VAR(HeadlightState, AUTOMATIC) Command);
-#define RTE_Write_PP_HeadlightActuator_Command RTE_Write_PP_HeadlightActuator_Command
+extern FUNC(Std_ReturnType, RTE_CODE_EcucPartition_0) RTE_Read_RP_HeadlightActuator_Command(P2VAR(HeadlightState, AUTOMATIC, RTE_APPL_DATA) Command);
+#define RTE_Read_RP_HeadlightActuator_Command RTE_Read_RP_HeadlightActuator_Command //read command from rte
+
+extern FUNC(void, RTE_CODE_EcucPartition_0) RTE_Ev_ControlHeadlight ();
+#define RTE_Ev_ControlHeadlight RTE_Ev_ControlHeadlight
+  
+
 
 #ifdef __cplusplus
 } /* extern "C" */

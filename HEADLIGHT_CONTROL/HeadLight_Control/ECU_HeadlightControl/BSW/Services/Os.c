@@ -62,7 +62,7 @@
      while(1){
      WaitEvent(Ev_HeadlightInputUpdate);
      ClearEvent(Ev_HeadlightInputUpdate);
-    RTE_Ev_ComputeHeadlightLogic();        //step 2
+    RTE_Ev_ComputeHeadlightLogic();        
      sentHL ^= 0x1U;  
          SetEvent(AppTask_HeadlightControl,Ev_HeadlightCommandSent);
      }
@@ -71,7 +71,7 @@
      while(1){
      WaitEvent(Ev_HeadlightStateUpdate);
      ClearEvent(Ev_HeadlightStateUpdate);
-     SendHeadlightState();  //step 4
+     RTE_Ev_SendHeadlightState();  
      feedbackHL ^= 0x1U;  
      }
  }

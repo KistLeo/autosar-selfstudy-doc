@@ -104,11 +104,13 @@ FUNC(Std_ReturnType, RTE_CODE_EcucPartition_0) Rte_Read_RP_AmbientSensor_Ambient
 /* Contents    : Reads speed data from the speed sensor layer                 */
 /* Author      :  DinhN                                                       */
 /******************************************************************************/ 
+#define RTE_START_SEC_CODE_EcucPartition_0
+#include "Rte_MemMap.h"
 FUNC(void, RTE_CODE_EcucPartition_0) RTE_Ev_ReadSpeedData(uint8_t *speed_check)
 {
     ReadSpeedData(speed_check);
 }
-
+#define RTE_STOP_SEC_CODE_EcucPartition_0
 /******************************************************************************/ 
 /* ModuleID    :                                                              */
 /* ServiceID   :                                                              */
@@ -120,6 +122,8 @@ FUNC(void, RTE_CODE_EcucPartition_0) RTE_Ev_ReadSpeedData(uint8_t *speed_check)
 /* Contents    : Reads speed data from the Speed Sensor and stores it in `Speed`*/
 /* Author      : DinhN                                                        */
 /******************************************************************************/ 
+#define RTE_START_SEC_CODE_EcucPartition_0
+#include "Rte_MemMap.h"
 FUNC(Std_ReturnType, RTE_CODE_EcucPartition_0) Rte_Read_RP_SpeedSensor_Speed(P2VAR(uint8, AUTOMATIC, RTE_APPL_DATA) Speed)
 {
     //Call down layer to read speed data here and then update to Rte_Speed
@@ -139,6 +143,7 @@ FUNC(Std_ReturnType, RTE_CODE_EcucPartition_0) Rte_Read_RP_SpeedSensor_Speed(P2V
 
     return E_NOT_OK;  // Trả về lỗi nếu con trỏ `Speed` là NULL
 }
+#define RTE_STOP_SEC_CODE_EcucPartition_0
 /******************************************************************************/ 
 /* ModuleID    :                                                              */
 /* ServiceID   :                                                              */
@@ -151,12 +156,14 @@ FUNC(Std_ReturnType, RTE_CODE_EcucPartition_0) Rte_Read_RP_SpeedSensor_Speed(P2V
 /*               so that it can be accessed by other software components      */
 /* Author      : DinhN                                                         */
 /******************************************************************************/ 
+#define RTE_START_SEC_CODE_EcucPartition_0
+#include "Rte_MemMap.h"
 FUNC(Std_ReturnType, RTE_CODE_EcucPartition_0) Rte_Write_PP_SpeedSensor_Speed(VAR(uint8, AUTOMATIC) Speed)
 {
     Rte_Speed = Speed; 
     return E_OK;
 }
-
+#define RTE_STOP_SEC_CODE_EcucPartition_0
 
 /******************************************************************************/ 
 /* ModuleID    :                                                              */
@@ -168,10 +175,13 @@ FUNC(Std_ReturnType, RTE_CODE_EcucPartition_0) Rte_Write_PP_SpeedSensor_Speed(VA
 /* Contents    : Reads steering angle data from the steering sensor layer     */
 /* Author      : DinhN                                                         */
 /******************************************************************************/ 
+#define RTE_START_SEC_CODE_EcucPartition_0
+#include "Rte_MemMap.h"
 FUNC(void, RTE_CODE_EcucPartition_0) RTE_Ev_ReadSteeringAngleData(sint16 *angle_check)
 {
     ReadSteeringAngleData(angle_check);
 }
+#define RTE_STOP_SEC_CODE_EcucPartition_0
 /******************************************************************************/ 
 /* ModuleID    :                                                              */
 /* ServiceID   :                                                              */
@@ -184,6 +194,8 @@ FUNC(void, RTE_CODE_EcucPartition_0) RTE_Ev_ReadSteeringAngleData(sint16 *angle_
 /*               in `Angle`                                                   */
 /* Author      : DinhN                                                         */
 /******************************************************************************/ 
+#define RTE_START_SEC_CODE_EcucPartition_0
+#include "Rte_MemMap.h"
 FUNC(Std_ReturnType, RTE_CODE_EcucPartition_0) Rte_Read_RP_SteeringAngleSensor_Angle(P2VAR(sint16, AUTOMATIC, RTE_APPL_DATA) Angle)
 {
     PduInfoType pduInfo;
@@ -203,6 +215,7 @@ FUNC(Std_ReturnType, RTE_CODE_EcucPartition_0) Rte_Read_RP_SteeringAngleSensor_A
 
     return E_NOT_OK;  // Trả về lỗi nếu không đọc được dữ liệu
 }
+#define RTE_STOP_SEC_CODE_EcucPartition_0
 /******************************************************************************/ 
 /* ModuleID    :                                                              */
 /* ServiceID   :                                                              */
@@ -215,12 +228,14 @@ FUNC(Std_ReturnType, RTE_CODE_EcucPartition_0) Rte_Read_RP_SteeringAngleSensor_A
 /*               `Rte_SteeringAngle` so that it can be accessed by other SWCs */
 /* Author      : DinhN                                                         */
 /******************************************************************************/ 
+#define RTE_START_SEC_CODE_EcucPartition_0
+#include "Rte_MemMap.h"
 FUNC(Std_ReturnType, RTE_CODE_EcucPartition_0) Rte_Write_PP_SteeringAngleSensor_Angle(VAR(sint16, AUTOMATIC) Angle)
 {
     Rte_SteeringAngle = Angle; 
     return E_OK;
 }
-
+#define RTE_STOP_SEC_CODE_EcucPartition_0
 
 /******************************************************************************/ 
 /* Name        : RTE_Read_RP_HeadlightController_HeadlightState               */
@@ -232,6 +247,8 @@ FUNC(Std_ReturnType, RTE_CODE_EcucPartition_0) Rte_Write_PP_SteeringAngleSensor_
 /*               stores it in `State`.                                        */
 /* Author      : DinhN                                                         */
 /******************************************************************************/ 
+#define RTE_START_SEC_CODE_EcucPartition_0
+#include "Rte_MemMap.h"
 FUNC(Std_ReturnType, RTE_CODE_EcucPartition_0) RTE_Read_RP_HeadlightController_HeadlightState(P2VAR(HeadlightState, AUTOMATIC, RTE_APPL_DATA) State)
 {
     if (State == NULL_PTR) {
@@ -241,7 +258,7 @@ FUNC(Std_ReturnType, RTE_CODE_EcucPartition_0) RTE_Read_RP_HeadlightController_H
     *State = Rte_HeadlightState;
     return E_OK;
 }
-
+#define RTE_STOP_SEC_CODE_EcucPartition_0
 /******************************************************************************/ 
 /* ModuleID    :                                                              */
 /* ServiceID   :                                                              */
@@ -254,9 +271,30 @@ FUNC(Std_ReturnType, RTE_CODE_EcucPartition_0) RTE_Read_RP_HeadlightController_H
 /*               `Rte_HeadlightState` so that it can be accessed by other SWCs*/
 /* Author      : DinhN                                                         */
 /******************************************************************************/ 
+#define RTE_START_SEC_CODE_EcucPartition_0
+#include "Rte_MemMap.h"
 FUNC(Std_ReturnType, RTE_CODE_EcucPartition_0) RTE_Write_PP_HeadlightController_HeadlightState(VAR(HeadlightState, AUTOMATIC) State)
 {
     Rte_HeadlightState = State;  
     return E_OK;
 }
+#define RTE_STOP_SEC_CODE_EcucPartition_0
+/******************************************************************************/ 
+/* ModuleID    :                                                              */
+/* ServiceID   :                                                              */
+/* Name        : RTE_Ev_ComputeHeadlightLogic                                 */
+/* Param       : None                                                         */
+/* Return      : None                                                         */
+/* Contents    : Computes the headlight logic based on sensor inputs          */
+/* Author      : DinhN                                                         */
+/******************************************************************************/ 
+#define RTE_START_SEC_CODE_EcucPartition_0
+#include "Rte_MemMap.h"
+
+FUNC(void, RTE_CODE_EcucPartition_0) RTE_Ev_ComputeHeadlightLogic(void)
+{
+    ComputeHeadlightLogic();
+}
+
+#define RTE_STOP_SEC_CODE_EcucPartition_0
 

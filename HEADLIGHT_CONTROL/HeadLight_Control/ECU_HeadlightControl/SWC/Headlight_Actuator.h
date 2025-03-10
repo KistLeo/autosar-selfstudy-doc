@@ -8,7 +8,7 @@
 
 
 void ControlHeadlight();
-
+void SendHeadlightState();
 
 
 

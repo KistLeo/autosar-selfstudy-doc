@@ -10,6 +10,8 @@
 /*               stores it in `State`.                                        */
 /* Author      : DinhN                                                         */
 /******************************************************************************/ 
+#define RTE_START_SEC_CODE_EcucPartition_0
+#include "Rte_MemMap.h"
 FUNC(Std_ReturnType, RTE_CODE_EcucPartition_0) RTE_Read_RP_HeadlightController_HeadlightState(P2VAR(HeadlightState, AUTOMATIC, RTE_APPL_DATA) State)
 {
     if (State == NULL_PTR) {
@@ -20,6 +22,7 @@ FUNC(Std_ReturnType, RTE_CODE_EcucPartition_0) RTE_Read_RP_HeadlightController_H
     return E_OK;
 }
 
+#define RTE_STOP_SEC_CODE_EcucPartition_0
 /******************************************************************************/ 
 /* Name        : RTE_Write_PP_HeadlightActuator_Command                        */
 /* Param       : VAR(HeadlightCommand, AUTOMATIC) Command                     */
@@ -29,12 +32,16 @@ FUNC(Std_ReturnType, RTE_CODE_EcucPartition_0) RTE_Read_RP_HeadlightController_H
 /* Contents    : Writes the headlight command to the RTE global variable      */
 /*               `Rte_HeadlightCommand`                                       */
 /******************************************************************************/ 
+#define RTE_START_SEC_CODE_EcucPartition_0
+#include "Rte_MemMap.h"
 FUNC(Std_ReturnType, RTE_CODE_EcucPartition_0) RTE_Write_PP_HeadlightActuator_Command(VAR(HeadlightState, AUTOMATIC) Command)
 {
     Rte_HeadlightCommand = Command;
+    IoHwAb_ControlHeadlight();
     return E_OK;
 }
 
+#define RTE_STOP_SEC_CODE_EcucPartition_0
 /******************************************************************************/ 
 /* Name        : RTE_Write_PP_HeadlightActuator_State                         */
 /* Param       : VAR(HeadlightState, AUTOMATIC) State                         */
@@ -44,13 +51,15 @@ FUNC(Std_ReturnType, RTE_CODE_EcucPartition_0) RTE_Write_PP_HeadlightActuator_Co
 /* Contents    : Writes the actual headlight state to the RTE global variable */
 /*               `Rte_HeadlightCurrentState`                                  */
 /******************************************************************************/ 
+#define RTE_START_SEC_CODE_EcucPartition_0
+#include "Rte_MemMap.h"
 FUNC(Std_ReturnType, RTE_CODE_EcucPartition_0) RTE_Write_PP_HeadlightActuator_State(VAR(HeadlightState, AUTOMATIC) State)
 {
     Rte_HeadlightCurrentState = State;
-    IoHwAb_ControlHeadlight();
     return E_OK;
 }
 
+#define RTE_STOP_SEC_CODE_EcucPartition_0
 /******************************************************************************/ 
 /* Name        : RTE_Read_RP_HeadlightActuator_Command                        */
 /* Param       : P2VAR(HeadlightState, AUTOMATIC, RTE_APPL_DATA) Command      */
@@ -59,6 +68,8 @@ FUNC(Std_ReturnType, RTE_CODE_EcucPartition_0) RTE_Write_PP_HeadlightActuator_St
 /*               - E_OK if successful, E_NOT_OK if error                      */
 /* Contents    : Reads the headlight command from `Rte_HeadlightCommand`      */
 /******************************************************************************/ 
+#define RTE_START_SEC_CODE_EcucPartition_0
+#include "Rte_MemMap.h"
 FUNC(Std_ReturnType, RTE_CODE_EcucPartition_0) RTE_Read_RP_HeadlightActuator_Command(P2VAR(HeadlightState, AUTOMATIC, RTE_APPL_DATA) Command)
 {
     if (Command == NULL_PTR) {
@@ -69,3 +80,41 @@ FUNC(Std_ReturnType, RTE_CODE_EcucPartition_0) RTE_Read_RP_HeadlightActuator_Com
 
     return E_OK;
 }
+
+#define RTE_STOP_SEC_CODE_EcucPartition_0
+/******************************************************************************/ 
+/* ModuleID    :                                                              */
+/* ServiceID   :                                                              */
+/* Name        : RTE_Ev_ControlHeadlight                                      */
+/* Param       : None                                                         */
+/* Return      : None                                                         */
+/* Contents    : Controls the headlight system based on input conditions      */
+/* Author      : DinhN                                                         */
+/******************************************************************************/ 
+#define RTE_START_SEC_CODE_EcucPartition_0
+#include "Rte_MemMap.h"
+
+FUNC(void, RTE_CODE_EcucPartition_0) RTE_Ev_ControlHeadlight(void)
+{
+    ControlHeadlight();
+}
+
+#define RTE_STOP_SEC_CODE_EcucPartition_0
+/******************************************************************************/ 
+/* ModuleID    :                                                              */
+/* ServiceID   :                                                              */
+/* Name        : RTE_Ev_SendHeadlightState                                    */
+/* Param       : None                                                         */
+/* Return      : None                                                         */
+/* Contents    : Sends the computed headlight state to the actuator           */
+/* Author      : DinhN                                                         */
+/******************************************************************************/ 
+#define RTE_START_SEC_CODE_EcucPartition_0
+#include "Rte_MemMap.h"
+
+FUNC(void, RTE_CODE_EcucPartition_0) RTE_Ev_SendHeadlightState(void)
+{
+    SendHeadlightState();
+}
+
+#define RTE_STOP_SEC_CODE_EcucPartition_0
