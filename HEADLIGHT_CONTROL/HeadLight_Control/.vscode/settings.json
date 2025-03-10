@@ -9,6 +9,13 @@
         "vehiclestatesensor.h": "c",
         "com.h": "c",
         "pdu_router.h": "c",
-        "headlight_controller.h": "c"
+        "headlight_controller.h": "c",
+        "compare": "c",
+        "stdint.h": "c",
+        "cstdlib": "c",
+        "vehiclestate_canrx.h": "c",
+        "rte_headlightcontroller.h": "c",
+        "iohwab_ambientsensor.h": "c",
+        "iohwab_lightcontrol.h": "c"
     }
 }

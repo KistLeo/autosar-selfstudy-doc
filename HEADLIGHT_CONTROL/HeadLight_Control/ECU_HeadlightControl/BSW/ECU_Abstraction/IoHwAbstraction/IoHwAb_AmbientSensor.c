@@ -1,6 +1,6 @@
-#include "IoHwAb_AmbientSensor.h"
+#include "BSW/ECU_Abstraction/IoHwAbstraction/IoHwAb_AmbientSensor.h"
 #include "stdio.h"
-#include "ECU_HeadlightControl/BSW/MCAL/ADCDriver/Adc.h"
+#include "BSW/MCAL/ADCDriver/Adc.h"
 #include <stdlib.h>  
 #include <stdint.h>
 

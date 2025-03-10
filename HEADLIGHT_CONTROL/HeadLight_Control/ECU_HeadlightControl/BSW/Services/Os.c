@@ -12,7 +12,7 @@
  #include <stdbool.h>
  #include "os.h"
  #include "Rte_HeadlightActuator.h"
- #include "Rte_HeadlightController.h"
+ #include "../RTE/Rte_HeadlightController.h"
  
  static uint8_t inputHL = 0U ; 
  static uint8_t sentHL = 0U ;
@@ -20,6 +20,8 @@
  static uint8_t feedbackHL = 0U ;
  
  static uint16 ambient_check = 0U;
+ static uint8 speed_check = 0U;
+ static sint16 angle_check = 0U;
  
  DeclareTask(AppTask_HeadlightControl);
  DeclareTask(AppTask_InitHW);
@@ -41,8 +43,9 @@
      WaitEvent(Ev_HeadlightInputCollect);
      ClearEvent(Ev_HeadlightInputCollect);
     RTE_Ev_ReadAmbientSensor(&ambient_check);
-    RTE_Ev_ReadCameraSensor();
-     inputHL ^= 0x1U;  
+    RTE_Ev_ReadSpeedData(&speed_check);
+    RTE_Ev_ReadSteeringAngleData(&angle_check);
+    inputHL ^= 0x1U;  
          SetEvent(AppTask_HeadlightLogic,Ev_HeadlightInputUpdate);
      }
  }
@@ -50,7 +53,7 @@
      while(1){
      WaitEvent(Ev_HeadlightCommandSent);
      ClearEvent(Ev_HeadlightCommandSent);
-         
+    RTE_Ev_ControlHeadlight();        
      controlHL ^= 0x1U;  
          SetEvent(AppTask_HeadlightFeedback,Ev_HeadlightStateUpdate);
      }
@@ -59,7 +62,7 @@
      while(1){
      WaitEvent(Ev_HeadlightInputUpdate);
      ClearEvent(Ev_HeadlightInputUpdate);
-         
+    RTE_Ev_ComputeHeadlightLogic();        //step 2
      sentHL ^= 0x1U;  
          SetEvent(AppTask_HeadlightControl,Ev_HeadlightCommandSent);
      }
@@ -68,7 +71,7 @@
      while(1){
      WaitEvent(Ev_HeadlightStateUpdate);
      ClearEvent(Ev_HeadlightStateUpdate);
-         
+     SendHeadlightState();  //step 4
      feedbackHL ^= 0x1U;  
      }
  }

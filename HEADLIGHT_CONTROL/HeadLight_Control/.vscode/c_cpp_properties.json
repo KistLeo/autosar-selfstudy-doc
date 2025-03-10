@@ -1,0 +1,22 @@
+{
+    "configurations": [
+        {
+            "name": "Linux",
+            "includePath": [
+                "${workspaceFolder}/**",
+                "${workspaceFolder}",
+                "${workspaceFolder}",
+                "${workspaceFolder}/ECU_HeadlightControl/RTE",
+                "${workspaceFolder}/ECU_HeadlightControl/SWC",
+                "${workspaceFolder}/Common",
+                "${workspaceFolder}/ECU_VehicleState/RTE"
+            ],
+            "defines": [],
+            "compilerPath": "/usr/bin/gcc",
+            "cStandard": "c17",
+            "cppStandard": "gnu++17",
+            "intelliSenseMode": "linux-gcc-x64"
+        }
+    ],
+    "version": 4
+}

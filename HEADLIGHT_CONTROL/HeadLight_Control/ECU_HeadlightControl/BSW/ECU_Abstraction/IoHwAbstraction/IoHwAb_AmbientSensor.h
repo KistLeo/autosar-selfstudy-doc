@@ -4,7 +4,7 @@
 
 #include "Std_Types.h"
 #include <math.h>
-#include "ECU_HeadlightControl/RTE/Rte_HeadlightController.h"
+#include "RTE/Rte_HeadlightController.h"
 
 
 /* Maximum Speed in km/h based on ADC full scale */

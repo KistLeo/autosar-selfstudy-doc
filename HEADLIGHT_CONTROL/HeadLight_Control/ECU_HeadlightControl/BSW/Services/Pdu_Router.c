@@ -1,47 +1,26 @@
-#include "Pdu_Router.h"
+#include "BSW/Services/Pdu_Router.h"
+#include "Com.h"
+#include "BSW/ECU_Abstraction/COMAbstraction/VehicleState_CanRx.h"
+#include "stddef.h"
 
-// Khởi tạo hệ thống PDU Router
-void PduR_Init(void) {
-    printf("PDU Router Initialized.\n");
-}
+/* Hàm xử lý dữ liệu từ CAN Interface */
+void PduR_RxIndication(PduIdType pduId, const PduInfoType* PduInfoPtr)
+{
+    if (PduInfoPtr == NULL || PduInfoPtr->SduDataPtr == NULL) {
+        return; 
+    }
 
-// Định tuyến PDU dựa trên giao thức
-void PduR_RoutePdu(Pdu_Type* pdu) {
-    printf("Routing PDU: Protocol ID = 0x%x, Data = %s, Length = %d\n", pdu->protocol_id, pdu->data, pdu->length);
-
-    switch (pdu->protocol_id) {
-        case PROTOCOL_CAN:
-            PduR_CanHandler(pdu);
+    /* Gửi dữ liệu lên COM Service */
+    switch (pduId)
+    {
+        case CAN_MSG_ID_SPEED:
+            Com_WriteSpeedData(PduInfoPtr->SduDataPtr[0]);  // Ghi tốc độ vào COM
             break;
-
-        case PROTOCOL_LIN:
-            PduR_LinHandler(pdu);
+        case CAN_MSG_ID_STEERING_ANGLE:
+            Com_WriteSteeringAngleData(PduInfoPtr->SduDataPtr[1]);  // Ghi góc lái vào COM
             break;
-
-        case PROTOCOL_ETHERNET:
-            PduR_EthernetHandler(pdu);
-            break;
-
         default:
-            printf("Unknown protocol ID: 0x%x\n", pdu->protocol_id);
+            // Xử lý trường hợp CAN ID không hợp lệ
             break;
     }
-}
-
-// Xử lý PDU cho giao thức CAN
-void PduR_CanHandler(Pdu_Type* pdu) {
-    printf("Handling CAN PDU: Data = %s, Length = %d\n", pdu->data, pdu->length);
-    // Xử lý dữ liệu theo giao thức CAN
-}
-
-// Xử lý PDU cho giao thức LIN
-void PduR_LinHandler(Pdu_Type* pdu) {
-    printf("Handling LIN PDU: Data = %s, Length = %d\n", pdu->data, pdu->length);
-    // Xử lý dữ liệu theo giao thức LIN
-}
-
-// Xử lý PDU cho giao thức Ethernet
-void PduR_EthernetHandler(Pdu_Type* pdu) {
-    printf("Handling Ethernet PDU: Data = %s, Length = %d\n", pdu->data, pdu->length);
-    // Xử lý dữ liệu theo giao thức Ethernet
 }
