@@ -38,7 +38,7 @@
  }
  
  // Task X? lý c?m bi?n v?i s? ki?n
- TASK(AppTask_HeadlightInput) {
+ TASK(AppTask_HeadlightInput) { //1
      while(1){
      WaitEvent(Ev_HeadlightInputCollect);
      ClearEvent(Ev_HeadlightInputCollect);
@@ -49,7 +49,7 @@
          SetEvent(AppTask_HeadlightLogic,Ev_HeadlightInputUpdate);
      }
  }
- TASK(AppTask_HeadlightControl) {
+ TASK(AppTask_HeadlightControl) { //3
      while(1){
      WaitEvent(Ev_HeadlightCommandSent);
      ClearEvent(Ev_HeadlightCommandSent);
@@ -58,7 +58,7 @@
          SetEvent(AppTask_HeadlightFeedback,Ev_HeadlightStateUpdate);
      }
  }
- TASK(AppTask_HeadlightLogic) {
+ TASK(AppTask_HeadlightLogic) { //2
      while(1){
      WaitEvent(Ev_HeadlightInputUpdate);
      ClearEvent(Ev_HeadlightInputUpdate);
@@ -67,11 +67,11 @@
          SetEvent(AppTask_HeadlightControl,Ev_HeadlightCommandSent);
      }
  }
- TASK(AppTask_HeadlightFeedback) {
+ TASK(AppTask_HeadlightFeedback) { //khong dung
      while(1){
      WaitEvent(Ev_HeadlightStateUpdate);
      ClearEvent(Ev_HeadlightStateUpdate);
-     RTE_Ev_SendHeadlightState();  
+    RTE_Ev_SendHeadlightState();  
      feedbackHL ^= 0x1U;  
      }
  }
